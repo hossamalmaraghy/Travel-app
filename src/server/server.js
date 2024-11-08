@@ -26,9 +26,9 @@ app.post('/api', async (req, res) => {
     // Geonames API call
     const geonamesUrl = `http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=${geonamesUsername}`;
     const geonamesResponse = await fetch(geonamesUrl);
+    if (!geonamesResponse.ok) throw new Error('Failed to fetch Geonames data');
+    
     const geonamesData = await geonamesResponse.json();
-    console.log('Geonames Data:', geonamesData); // Debug log
-
     if (!geonamesData.geonames || geonamesData.geonames.length === 0) {
       return res.status(404).send({ error: 'Location not found' });
     }
@@ -38,27 +38,20 @@ app.post('/api', async (req, res) => {
     // Weatherbit API call
     const weatherbitUrl = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${weatherbitApiKey}`;
     const weatherbitResponse = await fetch(weatherbitUrl);
+    if (!weatherbitResponse.ok) throw new Error('Failed to fetch Weatherbit data');
+    
     const weatherbitData = await weatherbitResponse.json();
-    console.log('Weatherbit Data:', weatherbitData); // Debug log
-
-    if (!weatherbitData.data || weatherbitData.data.length === 0) {
-      return res.status(404).send({ error: 'Weather data not found' });
-    }
-
     const weather = weatherbitData.data.find(entry => entry.datetime === date);
-
-    // Check if weather for the specified date was found
     if (!weather) {
-      console.log(`Weather data for the date ${date} not found.`);
       return res.status(404).send({ error: 'Weather data not available for the selected date' });
     }
 
     // Pixabay API call
     const pixabayUrl = `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(city)}&image_type=photo`;
     const pixabayResponse = await fetch(pixabayUrl);
+    if (!pixabayResponse.ok) throw new Error('Failed to fetch Pixabay data');
+    
     const pixabayData = await pixabayResponse.json();
-    console.log('Pixabay Data:', pixabayData); // Debug log
-
     const image = pixabayData.hits[0]?.webformatURL || 'default_image_url';
 
     // Send combined data to client
@@ -69,7 +62,7 @@ app.post('/api', async (req, res) => {
       image,
     });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send({ error: 'An error occurred' });
+    console.error('Error:', error.message);
+    res.status(500).send({ error: 'An error occurred while fetching data. Please try again later.' });
   }
 });
