@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel App</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Travel Planner</h1>
+    <form id="travel-form">
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required placeholder="Enter city name">
+      
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
+      
+      <button type="submit">Submit</button>
+    </form>
+    
+    <div id="results" class="hidden">
+      <h2 id="result-city"></h2>
+      <p id="result-date"></p>
+      <p id="result-temp"></p>
+      <p id="result-description"></p>
+      <img id="result-image" alt="City Image">
+    </div>
+    
+    <p id="error-message" class="error"></p>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>

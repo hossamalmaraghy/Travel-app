@@ -1,0 +1,43 @@
+{
+  "name": "travel-app",
+  "version": "1.0.0",
+  "main": "webpack.dev.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "start": "node src/server/server.js",
+    "dev": "webpack serve --config webpack.dev.js --open",
+    "build": "npm run clean && webpack --config webpack.prod.js"
+  },
+  "keywords": [
+    "travel",
+    "weather",
+    "images",
+    "API"
+  ],
+  "author": "Hossam",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.2",
+    "node-sass": "^9.0.0",
+    "sass-loader": "^16.0.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0",
+    "workbox-webpack-plugin": "^7.3.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "node-fetch": "^2.7.0"
+  }
+}
